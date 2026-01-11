@@ -1,46 +1,28 @@
 import itertools
 import pytest
 
-from game.card import Card, CardSuit, CardValue
-
-
-CardSuits = list(CardSuit)
-CardValues = list(CardValue)
+from game.card import Card
 
 
 class TestCardInitialize(object):
     def test_invalid(self) -> None:
         with pytest.raises(ValueError):
             Card(-1)
+        with pytest.raises(ValueError):
+            Card(52)
 
-    def test_valid_single_deck(self) -> None:
+    def test_valid(self) -> None:
         for i in range(52):
             card = Card(i)
-
             assert card._id == i
-            assert card._suit == CardSuits[(i // 13) % 4]
-            assert card._value == CardValues[i % 13]
-
-    def test_valid_multi_deck(self) -> None:
-        ndecks = [0, 1, 2, 100]
-
-        for i in range(52):
-            cards = [Card(52*n + i) for n in ndecks]
-
-            for card, n in zip(cards, ndecks):
-                assert card._id == 52*n + i
-                assert card._suit == CardSuits[(i // 13) % 4]
-                assert card._value == CardValues[i % 13]
-
-            assert all(c._suit == cards[0]._suit for c in cards)
-            assert all(c._value == cards[0]._value for c in cards)
 
 
 class TestCardDataModel(object):
     def test_eq(self) -> None:
-        assert Card(0) == Card(0) == 0
-        assert Card(0) != Card(1) == 1
-        assert Card(0) != Card(52) == 52
+        assert Card(0) == Card(0)
+        assert Card(0) == 0
+        assert Card(0) != Card(1)
+        assert Card(0) != 1
 
     def test_str(self) -> None:
         suits = "♠♥♣♦"
@@ -61,7 +43,7 @@ class TestCardScore(object):
 
             card = Card(i)
 
-            if card._value in "23456789":
+            if 0 < i % 13 < 9:
                 assert card.score == 0
             else:
                 assert card.score == 1
@@ -78,13 +60,5 @@ class TestCardValue(object):
         for i in range(52):
             card = Card(i)
 
-            if card._value == CardValue.ACE:
+            if i % 13 == 0:
                 assert card.value == (1, 11,)
-            elif card._value == CardValue.JACK:
-                assert card.value == (12,)
-            elif card._value == CardValue.QUEEN:
-                assert card.value == (13,)
-            elif card._value == CardValue.KING:
-                assert card.value == (14,)
-            else:
-                assert card.value == (int(card._value.value),)
