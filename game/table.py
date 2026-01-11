@@ -8,7 +8,7 @@ area for the game and enforces the rules of Tablić.
 import itertools
 import math
 
-from typing import Collection, Iterable
+from collections.abc import Collection, Iterable
 
 from .card import Card
 
