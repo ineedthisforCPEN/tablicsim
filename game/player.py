@@ -9,13 +9,11 @@ from abc import ABC, abstractmethod
 from collections.abc import Collection, Iterable
 
 from .card import Card
+from .exceptions import IllegalStrategyException
 from .table import Table
 
 
 TakenCards = Collection[Collection[Card]]
-
-
-class IllegalStrategyException(Exception): ...
 
 
 class Player(ABC):

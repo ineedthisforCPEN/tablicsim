@@ -2,11 +2,8 @@ import itertools
 import pytest
 
 from game.card import Card
-from game.table import (
-    IllegalMoveException,
-    IllegalStateException,
-    Table,
-)
+from game.exceptions import IllegalMoveException, IllegalStateException
+from game.table import Table
 
 
 @pytest.fixture

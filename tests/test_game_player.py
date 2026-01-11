@@ -1,11 +1,8 @@
 import pytest
 
 from game.card import Card
-from game.player import (
-    IllegalStrategyException,
-    Player,
-    TakenCards,
-)
+from game.exceptions import IllegalStrategyException
+from game.player import Player, TakenCards
 from game.table import Table
 
 

@@ -11,15 +11,10 @@ import math
 from collections.abc import Collection, Iterable
 
 from .card import Card
+from .exceptions import IllegalMoveException, IllegalStateException
 
 
 TakenCards = Collection[Collection[Card]]
-
-
-class IllegalMoveException(ValueError): ...
-
-
-class IllegalStateException(ValueError): ...
 
 
 class Table(object):
